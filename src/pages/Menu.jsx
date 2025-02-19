@@ -1,9 +1,11 @@
 import React from "react";
 import BottomNav from "../components/shared/BottomNav";
 import BackButton from "../components/shared/BackButton";
-import { FaUserCircle } from "react-icons/fa";
 import { MdRestaurantMenu } from "react-icons/md";
 import MenuContainer from "../components/menu/MenuContainer";
+import CustomerInfo from "../components/menu/CustomerInfo";
+import CartInfo from "../components/menu/CartInfo";
+import Bill from "../components/menu/Bill";
 
 const Menu = () => {
   return (
@@ -23,23 +25,26 @@ const Menu = () => {
                 <h1 className="text-md text-[#f5f5f5] font-semibold">
                   Customer Name
                 </h1>
-                <p className="text-xs text-[#ababab] font-medium">Table No: 2</p>
+                <p className="text-xs text-[#ababab] font-medium">
+                  Table No: 2
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <MenuContainer/>
+        <MenuContainer />
       </div>
       {/* Right Div */}
-      <div className="flex-[1] bg-[#393737] mt-4 mr-3 h-[640px] rounded-lg pt-2">
+      <div className="flex-[1] bg-[#1a1a1a] mt-4 mr-3 h-[640px] rounded-lg pt-2">
         {/* Customer Info */}
-        <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex flex-col items-start">
-                <h1 className="text-md text-[#f5f5f5] font-semibold tracking-wide">Customer Name</h1>
-                <p className="text-xs text-[#ababab] font-medium mt-1">#101/Dine in</p>
-            </div>
-        </div>
+        <CustomerInfo/>
+        <hr className="border-[#2a2a2a] border-t-2" />
+        {/* Cart  Items*/}
+        <CartInfo/>
+        <hr className="border-[#2a2a2a] border-t-2" />
+        {/* Bills */}
+        <Bill/>
       </div>
 
       <BottomNav />

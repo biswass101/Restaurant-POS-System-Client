@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { menus } from "../../constants";
 import { GrRadialSelected } from "react-icons/gr";
+import { FaShoppingCart } from "react-icons/fa";
 const MenuContainer = () => {
   const [selected, setSelected] = useState(menus[0]);
   const [itemCount, setItemCount] = useState(0);
-  const [itemId, setItemId] = useState()
+  const [itemId, setItemId] = useState();
   const decrement = (id) => {
-    setItemId(id)
+    setItemId(id);
     if (itemCount > 0) {
       setItemCount((prev) => prev - 1);
     }
   };
   const increment = (id) => {
-    setItemId(id)
+    setItemId(id);
     if (itemCount < 3) {
       setItemCount((prev) => prev + 1);
     }
@@ -30,15 +31,16 @@ const MenuContainer = () => {
                 backgroundColor: menu.bgColor,
               }}
               onClick={() => {
-                setSelected(menu)
-                setItemId(0)
-                setItemCount(0)
+                setSelected(menu);
+                setItemId(0);
+                setItemCount(0);
               }}
             >
               <div className="flex items-start justify-between w-full">
                 <h1 className="text-[#f5f5f5] text-lg font-semibold">
                   {menu.icon} {menu.name}
                 </h1>
+
                 {selected.id === menu.id && (
                   <GrRadialSelected className="text-white" />
                 )}
@@ -59,11 +61,16 @@ const MenuContainer = () => {
             <div
               key={menu.id}
               className="flex flex-col items-start justify-between p-4
-                    rounded-lg h-[120px] cursor-pointer bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+                    rounded-lg h-[140px] cursor-pointer bg-[#1a1a1a] hover:bg-[#2a2a2a]"
             >
-              <h1 className="text-[#f5f5f5] text-lg font-semibold">
-                {menu.name}
-              </h1>
+              <div className="flex items-start justify-between w-full">
+                <h1 className="text-[#f5f5f5] text-lg font-semibold">
+                  {menu.name}
+                </h1>
+                <button className="bg-[#2e4a40] text-[#02ca3a] p-2 rounded-lg cursor-pointer">
+                  <FaShoppingCart size={20}/>
+                </button>
+              </div>
               <div className="flex items-center justify-between w-full">
                 <p className="text-[#f5f5f5] text-xl font-bold">
                   ${menu.price}
@@ -75,7 +82,9 @@ const MenuContainer = () => {
                   >
                     &minus;
                   </button>
-                  <span className="text-white">{menu.id === itemId ? itemCount : '0'}</span>
+                  <span className="text-white">
+                    {menu.id === itemId ? itemCount : "0"}
+                  </span>
                   <button
                     onClick={() => increment(menu.id)}
                     className="text-yellow-500 text-2xl"
