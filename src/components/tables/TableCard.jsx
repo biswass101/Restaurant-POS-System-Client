@@ -1,10 +1,17 @@
 import React from "react";
 import { FaCheckDouble } from "react-icons/fa";
 import { getRandomBg } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 const TableCard = ({ id, name, status, initials }) => {
+  const navigate = useNavigate()
+  const handleClick = () => {
+    if(status === 'Booked') return;
+    navigate(`/menu`)
+  }
   return (
     <div
+      onClick={handleClick}
       key={id}
       className="w-[300px] bg-[#262626] hover:bg-[#353535] py-4 px-5 rounded-lg cursor-pointer"
     >

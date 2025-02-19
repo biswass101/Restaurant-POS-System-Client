@@ -55,8 +55,7 @@ const Orders = () => {
       </div>
 
       <div
-        className="flex flex-wrap gap-5 px-16 py-4 overflow-y-scroll no-scrollbar
-      h-[calc(100vh-8rem)]"
+        className="grid grid-cols-3 gap-3 px-16 py-4 h-[700px] overflow-y-scroll no-scrollar"
       >
         <OrderCard />
         <OrderCard />

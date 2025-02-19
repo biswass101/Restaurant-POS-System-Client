@@ -1,17 +1,16 @@
 export const getRandomBg = () => {
-    const colors = [
-      "#FF0000", // Red
-      "#00FF00", // Green
-      "#0000FF", // Blue
-      "#FFFF00", // Yellow
-      "#00FFFF", // Cyan
-      "#FF00FF", // Magenta
-      "#FFFFFF", // White
-      "#000000", // Black
-      "#808080", // Gray
-      "#FFA500", // Orange
-    ];
-  
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-  
+  const colors = [
+    "#FF00004D", // Light Red
+    "#00FF004D", // Light Green
+    "#0000FF4D", // Light Blue
+    "#FFFF004D", // Light Yellow
+    "#00FFFF4D", // Light Cyan
+    "#FF00FF4D", // Light Magenta
+    "#FFFFFF4D", // Light White
+    "#0000004D", // Light Black (Grayish)
+    "#8080804D", // Lighter Gray
+    "#FFA5004D", // Light Orange
+  ];
+
+  return colors[Math.floor(Math.random() * colors.length)];
+};

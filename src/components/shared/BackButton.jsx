@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const BackButton = () => {
     const navigate = useNavigate()
   return (
-    <button onClick={() => navigate(-1)} className='bg-[#025cca] p-3 text-xl 
+    <button onClick={() => navigate(-1)} className='bg-[#025cca] p-2 text-xl 
     font-bold rounded-full text-white'>
         <IoArrowBackOutline/>
     </button>

@@ -97,7 +97,7 @@ const BottomNav = () => {
             <button onClick={increment} className="text-yellow-500 text-2xl">
               &#43;
             </button>
-          </div>
+          </div>  
         </div>
         <button
           onClick={() => navigate("/tables")}
