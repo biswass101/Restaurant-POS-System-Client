@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BottomNav from "../components/shared/BottomNav";
 import BackButton from "../components/shared/BackButton";
 import TableCard from "../components/tables/TableCard";
+import { tables } from '../constants/index'
 
 const Tables = () => {
   const [status, setStatus] = useState("all");
@@ -35,8 +36,18 @@ const Tables = () => {
           </button>
         </div>
       </div>
-      <div className="px-16 py-4">
-        <TableCard />
+      <div className="">
+        <div
+          className="flex flex-wrap items-start justify-around gap-5 p-10 overflow-y-scroll no-scrollbar
+      h-[calc(100vh-12rem)]"
+        >
+          {
+            tables.map((table) => {
+              return <TableCard key={table.id} name = {table.name} status={table.status}
+                      initials = {table.initial}/>
+            })
+          }
+        </div>
       </div>
       <BottomNav />
     </section>
