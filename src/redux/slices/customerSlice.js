@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+    orderId: '',
     customerName: '',
     customerPhone: '',
     guests: 0,
-    tablesNo: ''
+    tableNo: ''
 
 }
 
@@ -14,6 +15,7 @@ const customerSlice = createSlice({
     reducers: {
         setCutomer: (state, action) => {
             const {name, phone, guests} = action.payload
+            state.orderId = `${Date.now()}`
             state.customerName = name,
             state.customerPhone = phone,
             state.guests = guests
@@ -22,10 +24,10 @@ const customerSlice = createSlice({
             state.customerName = '',
             state.customerPhone = '',
             state.guests = 0,
-            state.tablesNo = ''
+            state.tableNo = ''
         },
         updateTable: (state, action) => { 
-            state.tablesNo = action.payload.tablesNo
+            state.tableNo = action.payload.tableNo
         }
     }
 })

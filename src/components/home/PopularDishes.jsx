@@ -31,7 +31,7 @@ const PopularDishes = () => {
               <div>
                 <h1 className="text-[#f5f5f5] font-semibold tracking-wide">{dish.name}</h1>
                 <p className="text-[#f5f5f5] text-sm font-semibold mt-1">
-                  <spnan className = 'text-[#ababab]'>Orders: </spnan>
+                  <span className = 'text-[#ababab]'>Orders: </span>
                   {dish.numberOfOrders}
                 </p>
               </div>
