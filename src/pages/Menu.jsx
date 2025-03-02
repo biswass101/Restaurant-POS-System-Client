@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 const Menu = () => {
 
   const customerData = useSelector(state => state.customer)
-  console.log(customerData)
   return (
     <section className="bg-[#1a1a1a] h-[calc(100vh-5rem)] overflow-hidden flex gap-3">
       <div className="flex-[3]">
