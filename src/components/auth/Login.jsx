@@ -1,4 +1,6 @@
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { login } from "../../https";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +14,19 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    loginMutation.mutate(formData)
   };
-  return (
+
+  const loginMutation = useMutation({
+    mutationFn: (reqData) => login(reqData),
+    onSuccess: (data) => {
+      const {data} = res;
+      console.log(data)
+    },
+    onError: (err) => {
+      console.log(err)  
+    }
+  }
     <div>
       <form onSubmit={handleSubmit}>
         <div>
