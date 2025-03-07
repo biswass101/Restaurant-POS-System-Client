@@ -1,8 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { login } from "../../https";
+import { enqueueSnackbar } from "notistack"
+import {useDispatch} from 'react-redux'
+import { setUser } from "../../redux/slices/userSlice";
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,19 +20,25 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginMutation.mutate(formData)
+    loginMutation.mutate(formData);
   };
 
+  //Data Fetching
   const loginMutation = useMutation({
     mutationFn: (reqData) => login(reqData),
-    onSuccess: (data) => {
-      const {data} = res;
-      console.log(data)
+    onSuccess: (res) => {
+      const { data } = res;
+      console.log(data);
+      const { _id, name, email, phone, role } = data.data
+      dispatch(setUser({_id, name, email, phone, role}));
+      navigate('/')
     },
-    onError: (err) => {
-      console.log(err)  
-    }
-  }
+    onError: (error) => {
+      const { response } = error;
+      enqueueSnackbar(response.data.message, {variant: 'error'})
+    },
+  });
+  return (
     <div>
       <form onSubmit={handleSubmit}>
         <div>
