@@ -26,7 +26,7 @@ const Register = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label className="block text-[#ababab] mb-2 text-sm font-medium">
+          <label className="block text-[#ababab] my-2 text-sm font-medium">
             Employee Name
           </label>
           <div className="flex item-center rounded-lg p-5 px4 bg-[#1f1f1f]">
@@ -42,7 +42,7 @@ const Register = () => {
           </div>
         </div>
         <div>
-          <label className="block text-[#ababab] mb-2 text-sm font-medium">
+          <label className="block text-[#ababab] my-2 text-sm font-medium">
             Employee Email
           </label>
           <div className="flex item-center rounded-lg p-5 px4 bg-[#1f1f1f]">
@@ -58,7 +58,7 @@ const Register = () => {
           </div>
         </div>
         <div>
-          <label className="block text-[#ababab] mb-2 text-sm font-medium">
+          <label className="block text-[#ababab] my-2 text-sm font-medium">
             Employee Phone
           </label>
           <div className="flex item-center rounded-lg p-5 px4 bg-[#1f1f1f]">
@@ -74,7 +74,7 @@ const Register = () => {
           </div>
         </div>
         <div>
-          <label className="block text-[#ababab] mb-2 text-sm font-medium">
+          <label className="block text-[#ababab] my-2 text-sm font-medium">
             Passowrd
           </label>
           <div className="flex item-center rounded-lg p-5 px4 bg-[#1f1f1f]">
@@ -90,10 +90,10 @@ const Register = () => {
           </div>
         </div>
         <div>
-          <label className="bock text-[#ababab] mb-2 text-sm font-medium">
+          <label className="block text-[#ababab] my-2 text-sm font-medium">
             Choose your role
           </label>
-          <div className="flex item-center gap-3 mt-4">
+          <div className="flex item-center gap-3">
             {["Waiter", "Cashier", "Admin"].map((role) => {
               return (
                 <button
