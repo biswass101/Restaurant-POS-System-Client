@@ -7,7 +7,7 @@ export const getRandomBg = () => {
     "#00FFFF4D", // Light Cyan
     "#FF00FF4D", // Light Magenta
     "#FFFFFF4D", // Light White
-    "#0000004D", // Light Black (Grayish)
+    "#0000004D", // Light Black
     "#8080804D", // Lighter Gray
     "#FFA5004D", // Light Orange
   ];
