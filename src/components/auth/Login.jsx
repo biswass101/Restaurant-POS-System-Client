@@ -28,7 +28,7 @@ const Login = () => {
     mutationFn: (reqData) => login(reqData),
     onSuccess: (res) => {
       const { data } = res;
-      console.log(data);
+      enqueueSnackbar(data.message, {variant: 'success'});
       const { _id, name, email, phone, role } = data.data
       dispatch(setUser({_id, name, email, phone, role}));
       navigate('/')

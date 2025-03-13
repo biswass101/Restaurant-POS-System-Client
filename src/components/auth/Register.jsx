@@ -1,26 +1,51 @@
 import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
+import { register } from "../../https";
 
-const Register = () => {
-    const [formData, setFormData] = useState({
+const Register = ({setIsRegister}) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    role: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleRoleSelection = (selectedRole) => {
+    setFormData({ ...formData, role: selectedRole });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    registerMutation.mutate(formData);
+  };
+
+  const registerMutation = useMutation({
+    mutationFn: (reqData) => register(reqData),
+    onSuccess: (res) => {
+      const { data } = res;
+      enqueueSnackbar(data.message, { variant: "success" });
+      setFormData({
         name: "",
         email: "",
         phone: "",
         password: "",
-        role: ""
-    })
-
-    const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value });
-    }
-
-    const handleRoleSelection = (selectedRole) => {
-        setFormData({...formData, role: selectedRole})
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData)
-    }
+        role: "",
+      });
+      setTimeout(() => {
+        setIsRegister(false);
+      }, 1500);
+    },
+    onError: (error) => {
+      const { response } = error;
+      enqueueSnackbar(response.data.message, { variant: "error" });
+    },
+  });
 
   return (
     <div>
@@ -103,7 +128,7 @@ const Register = () => {
                   }}
                   key={role}
                   className={`bg-[#1f1f1f] px-4 py-3 w-full rounded-lg text-[#ababab] 
-                    ${formData.role === role ? "bg-indigo-700" : ''}`}
+                    ${formData.role === role ? "bg-indigo-700" : ""}`}
                 >
                   {role}
                 </button>
@@ -112,8 +137,11 @@ const Register = () => {
           </div>
         </div>
 
-        <button type="submit" className="w-full rounded-lg mt-6 py-3 text-lg bg-yellow-400 text-gray-900 font-bold">
-            Sign up
+        <button
+          type="submit"
+          className="w-full rounded-lg mt-6 py-3 text-lg bg-yellow-400 text-gray-900 font-bold"
+        >
+          Sign up
         </button>
       </form>
     </div>
