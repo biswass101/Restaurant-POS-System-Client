@@ -1,10 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import { useMutation } from "@tanstack/react-query"
+import { addTable } from "../../https";
+import { enqueueSnackbar } from 'notistack'
+
 const Modal = ({ setIsTableModalOpen }) => {
+  const [tableData, setTableData] = useState({
+    tableNo: "",
+    seats: ""
+  })
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setTableData((prev) => ({...prev, [name]: value}))
+  }
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
+    tableMutation.mutate(tableData);
+  }
+
   const handleCloseModal = () => {
     setIsTableModalOpen(false);
   };
+
+  const tableMutation = useMutation({
+    mutationFn: (reqData) => addTable(reqData),
+    onSuccess: (res) => {
+      const{data} = res;
+      setIsTableModalOpen(false);
+      enqueueSnackbar(data.message, {variant: "success"})
+    },
+    onError: (error) => {
+      const { data }  = error.response;
+      enqueueSnackbar(data.message, { variant: "error"})
+    }
+  })
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <motion.div
@@ -27,7 +60,9 @@ const Modal = ({ setIsTableModalOpen }) => {
 
         {/* Modal Body */}
 
-        <form className="space-y-4 mt-10">
+        <form
+        onSubmit={handleSumbit} 
+        className="space-y-4 mt-10">
           <div>
             <label className="block text-[#ababab] mb-2 text-sm font-medium">
               Table Number
@@ -35,7 +70,9 @@ const Modal = ({ setIsTableModalOpen }) => {
             <div className="flex item-center rounded-lg p-5 px4 bg-[#1f1f1f]">
               <input
                 type="number"
-                name="tableNumber"
+                name="tableNo"
+                value={tableData.tableNo}
+                onChange={handleInputChange}
                 className="bg-transparent flex-1 text-white focus:outline-none"
                 required
               />
@@ -50,6 +87,8 @@ const Modal = ({ setIsTableModalOpen }) => {
               <input
                 type="number"
                 name="seats"
+                value={tableData.seats}
+                onChange={handleInputChange}
                 className="bg-transparent flex-1 text-white focus:outline-none"
                 required
               />

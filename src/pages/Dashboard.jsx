@@ -27,9 +27,10 @@ const Dashboard = () => {
         py-14 px-6 md:px-4"
       >
         <div className="flex items-center gap-3">
-          {buttons.map(({ label, icon, action }) => {
+          {buttons.map(({ label, icon, action }, idx) => {
             return (
               <button
+                key={idx}
                 onClick={() => handleOpenModal(action)}
                 className="bg-[#1a1a1a] hover:bg-[#262626] px-8 py-3
                             rounded-lg text-[#f5f5f5] font-semibold text-md flex items-center
@@ -41,9 +42,10 @@ const Dashboard = () => {
           })}
         </div>
         <div className="flex items-center gap-3">
-          {tabs.map((tab) => {
+          {tabs.map((tab, idx) => {
             return (
               <button
+                key={idx}
                 className={`px-8 py-3
                             rounded-lg text-[#f5f5f5] font-semibold text-md flex items-center
                             gap-2 ${
