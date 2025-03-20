@@ -1,6 +1,6 @@
 import React from "react";
 import { FaCheckDouble, FaLongArrowAltRight } from "react-icons/fa";
-import { getRandomBg } from "../../utils";
+import { getAvatarName, getRandomBg } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateTable } from "../../redux/slices/customerSlice";
@@ -35,9 +35,9 @@ const TableCard = ({ id, name, status, initials }) => {
       <div className="flex items-center justify-center my-5">
         <h1
           className={` flex justify-center items-center text-slate-300 h-16 w-16 rounded-full p-4 text-xl font-bold`}
-          style={{ backgroundColor: getRandomBg() }}
+          style={{ backgroundColor: initials ? getRandomBg() : '#1f1f1f' }}
         >
-          {initials}
+          {getAvatarName(initials) || 'N/A'}
         </h1>
       </div>
     </div>

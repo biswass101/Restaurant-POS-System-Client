@@ -66,7 +66,7 @@ const Tables = () => {
               id={table._id} 
               name = {table.tableNo} 
               status={table.status}
-              initials = {"AM"}
+              initials = {table?.currentOrder?.customerDetails.name}
               seats = {table.seats}
               />
             })
