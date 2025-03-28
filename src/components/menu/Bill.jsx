@@ -1,6 +1,8 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { getTotalPrice } from "../../redux/slices/cartSlice";
+import { useState } from "react";
+import { enqueueSnackbar } from 'notistack'
+import axios from "axios";
 
 const Bill = () => {
 
@@ -10,6 +12,30 @@ const Bill = () => {
   const taxRate = 5.25;
   const tax = (total * taxRate) / 100;
   const totalPriceWithTax = total + tax;
+
+  const[paymentMethod, setPyamentMethod] = useState()
+
+  const handlePlaceOrder = async () => {
+    if(!paymentMethod) {
+      enqueueSnackbar("Please select a payment method!", {variant: "warning"})
+      return ;
+    }
+
+    //handle bill
+    try {
+      const { data } = await axios.post(
+        `http://localhost:8000/api/payment/bkash/create-order`,
+        {
+          amount: totalPriceWithTax,
+        }
+      );
+      window.location.href = data.bkashURL;
+      console.log(data);
+    } catch (error) {
+      console.log(error.response.data);
+      // console.log("Here")
+    }
+  }
 
   return (
     <>
@@ -26,12 +52,12 @@ const Bill = () => {
         <h1 className="text-[#f5f5f5] text-md font-bold">${totalPriceWithTax.toFixed(2)}</h1>
       </div>
       <div className="flex items-center gap-3 px-5 mt-4">
-        <button className="bg-[#1f1f1f] px-4 py-3 w-full rounded-lg text-[#ababab]
-        font-semibold">
+        <button onClick={() => setPyamentMethod('Cash')} className={`bg-[#1f1f1f] px-4 py-3 w-full rounded-lg text-[#ababab]
+        font-semibold ${paymentMethod === 'Cash' ? "bg-[#383737]" : ''}`}>
           Cash
         </button>
-        <button className="bg-[#1f1f1f] px-4 py-3 w-full rounded-lg text-[#ababab]
-        font-semibold">
+        <button onClick={() => setPyamentMethod('Online')} className={`bg-[#1f1f1f] px-4 py-3 w-full rounded-lg text-[#ababab]
+        font-semibold ${paymentMethod === 'Online' ? "bg-[#383737]" : ''}`}>
           Online
         </button>
       </div>
@@ -40,7 +66,7 @@ const Bill = () => {
         font-semibold text-lg">
           Print Receipt
         </button>
-        <button className="bg-[#f6b100] px-4 py-3 w-full rounded-lg text-[#1f1f1f]
+        <button onClick={handlePlaceOrder} className="bg-[#f6b100] px-4 py-3 w-full rounded-lg text-[#1f1f1f]
         font-semibold text-lg">
           Place Order
         </button>

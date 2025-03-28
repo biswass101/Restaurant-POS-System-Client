@@ -1,4 +1,3 @@
-import React from "react";
 import { FaBell, FaSearch, FaUserCircle } from "react-icons/fa";
 import logo from "../../assets/images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
