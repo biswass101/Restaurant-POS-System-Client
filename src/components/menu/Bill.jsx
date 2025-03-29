@@ -1,21 +1,27 @@
 import { useSelector } from "react-redux";
 import { getTotalPrice } from "../../redux/slices/cartSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { enqueueSnackbar } from 'notistack'
 import axios from "axios";
 
 const Bill = () => {
 
-
+  console.log("Rendering");
   const cartData = useSelector((state) => state.cart);
   const total = useSelector(getTotalPrice)
   const taxRate = 5.25;
   const tax = (total * taxRate) / 100;
-  const totalPriceWithTax = total + tax;
+  const [totalPriceWithTax, setTotalPriceWithTax] = useState(0);
 
   const[paymentMethod, setPyamentMethod] = useState()
 
+  useEffect(() => {
+    setTotalPriceWithTax(total + tax);
+  }, [total])
+
   const handlePlaceOrder = async () => {
+    // console.log("code came here!");
+
     if(!paymentMethod) {
       enqueueSnackbar("Please select a payment method!", {variant: "warning"})
       return ;
@@ -23,14 +29,15 @@ const Bill = () => {
 
     //handle bill
     try {
+      console.log("Bhai ene to thik ei ache: ", totalPriceWithTax);
       const { data } = await axios.post(
         `http://localhost:8000/api/payment/bkash/create-order`,
         {
-          amount: totalPriceWithTax,
+          amount: totalPriceWithTax.toFixed(2),
         }
       );
-      window.location.href = data.bkashURL;
-      console.log(data);
+      window.location.href = data.data.bkashURL;
+      console.log(data.data.bkashURL);
     } catch (error) {
       console.log(error.response.data);
       // console.log("Here")
