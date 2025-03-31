@@ -1,15 +1,19 @@
 import React from "react";
-import { FaCheckDouble, FaLongArrowAltRight } from "react-icons/fa";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { getAvatarName, getRandomBg } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateTable } from "../../redux/slices/customerSlice";
+import { enqueueSnackbar } from 'notistack'
 
 const TableCard = ({ id, name, status, initials }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handleClick = (name) => {
-    if(status === 'Booked') return;
+    if(status === 'Booked') {
+      enqueueSnackbar("Select Available Table", {variant: "warning"});
+      return;
+    };
 
     const table = {
       tableId: id, tableNo: name

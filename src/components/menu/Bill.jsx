@@ -68,6 +68,12 @@ const Bill = () => {
       });
       return;
     }
+    if (!total) {
+      enqueueSnackbar("Please Select some item to continue", {
+        variant: "warning",
+      })
+      return;
+    }
 
     //handle bill
     try {

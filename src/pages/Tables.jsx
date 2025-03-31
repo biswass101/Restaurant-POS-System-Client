@@ -2,27 +2,23 @@ import React, { useState } from "react";
 import BottomNav from "../components/shared/BottomNav";
 import BackButton from "../components/shared/BackButton";
 import TableCard from "../components/tables/TableCard";
-import { tables } from '../constants/index'
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getTables } from "../https";
 import { enqueueSnackbar } from "notistack";
 
 const Tables = () => {
   const [status, setStatus] = useState("all");
-
-  const {data: resData, isError} = useQuery({
+  const { data: resData, isError } = useQuery({
     queryKey: ["tables"],
-    queryFn: async() => {
+    queryFn: async () => {
       return await getTables();
     },
-    placeholderData: keepPreviousData
-  })
+    placeholderData: keepPreviousData,
+  });
 
-  if(isError) {
-    enqueueSnackbar("Something Went Wrong!", {variant: "error"})
+  if (isError) {
+    enqueueSnackbar("Something Went Wrong!", { variant: "error" });
   }
-
-  console.log(resData)
 
   return (
     <section className="bg-[#1f1f1f] h-[calc(100vh-5rem)] overflow-hidden">
@@ -44,9 +40,18 @@ const Tables = () => {
             All
           </button>
           <button
-            onClick={() => setStatus("booked")}
+            onClick={() => setStatus("Available")}
             className={`text-[#ababab] text-lg ${
-              status === "booked" && "bg-[#383838] rounded-lg px-4 py-2"
+              status === "Available" && "bg-[#383838] rounded-lg px-4 py-2"
+            } rounded-lg px-4 py-2
+          font-semibold`}
+          >
+            Available
+          </button>
+          <button
+            onClick={() => setStatus("Booked")}
+            className={`text-[#ababab] text-lg ${
+              status === "Booked" && "bg-[#383838] rounded-lg px-4 py-2"
             } rounded-lg px-4 py-2
           font-semibold`}
           >
@@ -59,18 +64,20 @@ const Tables = () => {
           className="flex flex-wrap items-start justify-around gap-5 p-10 overflow-y-scroll no-scrollbar
       h-[calc(100vh-12rem)]"
         >
-          {
-            resData?.data.data.map((table) => {
-              return <TableCard 
-              key={table._id}
-              id={table._id} 
-              name = {table.tableNo} 
-              status={table.status}
-              initials = {table?.currentOrder?.customerDetails.name}
-              seats = {table.seats}
-              />
-            })
-          }
+          {resData?.data.data
+            .filter((table) => status === "all" || table.status === status)
+            .map((table) => {
+              return (
+                <TableCard
+                  key={table._id}
+                  id={table._id}
+                  name={table.tableNo}
+                  status={table.status}
+                  initials={table?.currentOrder?.customerDetails.name}
+                  seats={table.seats}
+                />
+              );
+            })}
         </div>
       </div>
       <BottomNav />
