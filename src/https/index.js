@@ -26,3 +26,4 @@ export const updateTable = ({tableId, ...tableData}) => api.put(
 //Order endPoints
 export const addOrder = (data) => api.post('/api/order', data);
 export const getOrders = () => api.get('/api/order');
+export const updateOrderStatus = ({orderId, orderStatus}) => api.put(`/api/order/${orderId}`, {orderStatus});

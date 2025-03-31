@@ -29,6 +29,8 @@ const Bill = () => {
       //place order
       const getCustData = JSON.parse(localStorage.getItem('customerData'));
       const getCartData = JSON.parse(localStorage.getItem('cartData'));
+      const getCustBillInfo = JSON.parse(localStorage.getItem('custBillInfo'));
+      
       const orderData = {
         customerDetails: {
           name: getCustData.customerName,
@@ -37,11 +39,7 @@ const Bill = () => {
 
         },
         orderStatus: "In Progress",
-        bills: {
-          total: total,
-          tax: tax,
-          totalWithTax: totalPriceWithTax
-        },
+        bills: getCustBillInfo, //Object
         items: getCartData,
         table: getCustData.table.tableId
       };
@@ -75,6 +73,12 @@ const Bill = () => {
           amount: totalPriceWithTax.toFixed(2),
         }
       );
+      const custBillInfo = {
+        total: total,
+        tax: tax,
+        totalWithTax: totalPriceWithTax
+      }
+      localStorage.setItem('custBillInfo', JSON.stringify(custBillInfo));
       localStorage.setItem('customerData', JSON.stringify(customerData));
       localStorage.setItem('cartData', JSON.stringify(cartData));
       window.location.href = data.data.bkashURL;
@@ -117,6 +121,7 @@ const Bill = () => {
       localStorage.removeItem('customerData');
       dispatch(removeAllItmes());
       localStorage.removeItem('cartData');
+      localStorage.removeItem('custBillInfo');
 
     },
     onError: (error) => {

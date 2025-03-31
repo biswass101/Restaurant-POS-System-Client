@@ -1,8 +1,8 @@
 import React from "react";
-import { FaCheckDouble, FaCircle } from "react-icons/fa";
-import { getAvatarName } from "../../utils";
+import { FaCheckDouble, FaCircle, FaLongArrowAltRight } from "react-icons/fa";
+import { formateDateAndTime, getAvatarName } from "../../utils";
 
-const OrderCard = ({ key, order }) => {
+const OrderCard = ({ order }) => {
   console.log(order);
   return (
     <div className="w-[500px] bg-[#262626] py-4 px-5 rounded-lg mb-4">
@@ -15,7 +15,12 @@ const OrderCard = ({ key, order }) => {
             <h1 className="text-[#f5f5f5] text-lg font-semibold tracking-wide">
               {order.customerDetails.name}
             </h1>
-            <p className="text-[#ababab] text-sm">#101/ Dine in</p>
+            <p className="text-[#ababab] text-sm">#{Math.floor(new Date(order.orderDate).getTime())}/ Dine in</p>
+            <p className="text-[#ababab] text-sm">
+              <FaLongArrowAltRight
+                      className="text-[#ababab] ml-2 inline"/>
+              Table {order.table?.tableNo}
+            </p>
           </div>
 
           <div className="flex flex-col items-end gap-1">
@@ -45,13 +50,13 @@ const OrderCard = ({ key, order }) => {
       </div>
 
       <div className="flex justify-between items-center mt-4 text-[#ababab]">
-        <p>{order.createdAt}</p>
+        <p>{formateDateAndTime(order.createdAt)}</p>
         <p>{order.items.length}</p>
       </div>
       <hr className="w-full mt-4 border-t-1 border-gray-500" />
       <div className="flex justify-between mt-2">
         <h1 className="text-[#f5f5f5] text-lg font-semibold">Total</h1>
-        <p className="text-[#f5f5f5] text-lg font-semibold">${order.bills.totalWithTax}</p>
+        <p className="text-[#f5f5f5] text-lg font-semibold">${order.bills.totalWithTax.toFixed(2)}</p>
       </div>
     </div>
   );

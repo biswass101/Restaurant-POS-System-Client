@@ -31,3 +31,18 @@ export const formateDate = (date) => {
 
   return `${months[date.getMonth()]} ${String(date.getDate()).padStart(2, '0')},${date.getFullYear()}`
 }
+
+export const formateDateAndTime = (date) => {
+  const dateAndTime = new Date(date).toLocaleString('en-US', {
+    month: "long",
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+    timeZone: 'Asia/Dhaka'
+  })
+
+  return dateAndTime;
+}
