@@ -7,7 +7,7 @@ import { getOrders } from "../https";
 import {enqueueSnackbar} from 'notistack'
 
 const Orders = () => {
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState("All");
 
   //getting orders
   const {data: resData, isError} = useQuery({
@@ -33,36 +33,36 @@ const Orders = () => {
         </div>
         <div className="flex items-center justify-around gap-4">
           <button
-            onClick={() => setStatus("all")}
+            onClick={() => setStatus("All")}
             className={`text-[#ababab] text-lg ${
-              status === "all" && "bg-[#383838] rounded-lg px-4 py-2"
+              status === "All" && "bg-[#383838] rounded-lg px-4 py-2"
             } rounded-lg px-4 py-2
           font-semibold`}
           >
             All
           </button>
           <button
-            onClick={() => setStatus("progress")}
+            onClick={() => setStatus("In Progress")}
             className={`text-[#ababab] text-lg ${
-              status === "progress" && "bg-[#383838] rounded-lg px-4 py-2"
+              status === "In Progress" && "bg-[#383838] rounded-lg px-4 py-2"
             } rounded-lg px-4 py-2
           font-semibold`}
           >
             In Progress
           </button>
           <button
-            onClick={() => setStatus("ready")}
+            onClick={() => setStatus("Ready")}
             className={`text-[#ababab] text-lg ${
-              status === "ready" && "bg-[#383838] rounded-lg px-4 py-2"
+              status === "Ready" && "bg-[#383838] rounded-lg px-4 py-2"
             } rounded-lg px-4 py-2
           font-semibold`}
           >
             Ready
           </button>
           <button
-            onClick={() => setStatus("completed")}
+            onClick={() => setStatus("Completed")}
             className={`text-[#ababab] text-lg ${
-              status === "completed" && "bg-[#383838] rounded-lg px-4 py-2"
+              status === "Completed" && "bg-[#383838] rounded-lg px-4 py-2"
             } rounded-lg px-4 py-2
           font-semibold`}
           >
@@ -76,7 +76,11 @@ const Orders = () => {
       >
         {
           resData?.data.data.length > 0 ? (
-            resData.data.data.map((order) => {
+            resData.data.data.filter((order) => {
+              if(status === 'All') return true;
+              else return status === order.orderStatus;
+            }).map((order) => {
+              // console.log(order.orderStatus );
               return <OrderCard key={order._id} order = {order}/>
             })
           ): <p className="col-span-3 text-gray-500">No orders available</p>

@@ -40,9 +40,9 @@ const RecentOrders = () => {
       <h2 className="text-[#f5f5f5] text-xl font-semibold mb-4">
         Recent Orders
       </h2>
-      <div className="overflow-x-auto">
+      <div className="overflow-y-scroll h-[60vh]">
         <table className="w-full text-left text-[#f5f5f5]">
-          <thead className="bg-[#333] text-[#ababab]">
+          <thead className="bg-[#333] text-[#ababab] sticky top-0">
             <tr>
               <th className="p-3">Order ID</th>
               <th className="p-3">Customer</th>
