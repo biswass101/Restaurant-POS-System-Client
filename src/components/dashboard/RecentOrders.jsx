@@ -19,7 +19,7 @@ const RecentOrders = () => {
       queryClient.invalidateQueries(["orders"]) //refresh order list
     },
     onError: () => {
-      enqueueSnackbar("Failed to update order status!", {variant: "error"});
+      enqueueSnackbar("Failed to update order status", {variant: "error"});
     }
   })
 
