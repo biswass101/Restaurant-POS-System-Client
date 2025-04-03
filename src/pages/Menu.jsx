@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BottomNav from "../components/shared/BottomNav";
 import BackButton from "../components/shared/BackButton";
 import { MdRestaurantMenu } from "react-icons/md";
@@ -7,11 +7,25 @@ import CustomerInfo from "../components/menu/CustomerInfo";
 import CartInfo from "../components/menu/CartInfo";
 import Bill from "../components/menu/Bill";
 import { useSelector } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const Menu = () => {
 
-  const customerData = useSelector(state => state.customer)
+  const customerData = useSelector(state => state.customer);
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get("payment-status");
   // console.log(customerData);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(customerData.orderId === '' && customerData.customerName === ''
+      && customerData.customerPhone === '' && customerData.guests == 0
+      && !status && status !== ('success' || 'cancel' || 'failure')
+    ) {
+      enqueueSnackbar("Order and Customer Inforamtion Missing", {variant: 'error'});
+      navigate('/');
+    }
+  }, [])
   return (
     <section className="bg-[#1a1a1a] h-[calc(100vh-5rem)] overflow-hidden flex gap-3">
       <div className="flex-[3]">

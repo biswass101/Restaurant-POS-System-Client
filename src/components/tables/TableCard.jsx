@@ -2,11 +2,13 @@ import React from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { getAvatarName, getRandomBg } from "../../utils";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateTable } from "../../redux/slices/customerSlice";
 import { enqueueSnackbar } from 'notistack'
 
 const TableCard = ({ id, name, status, initials }) => {
+  const custInfo = useSelector(state => state.customer);
+  // console.log(custInfo);
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handleClick = (name) => {
@@ -15,6 +17,12 @@ const TableCard = ({ id, name, status, initials }) => {
       return;
     };
 
+    if(custInfo.orderId === '' || custInfo.customerName === '' ||
+      custInfo.customerPhone === '' || custInfo.guests === 0
+    ) {
+      enqueueSnackbar("Customer Information Required before creating order!", {variant: 'warning'});
+      return;
+    }
     const table = {
       tableId: id, tableNo: name
     }

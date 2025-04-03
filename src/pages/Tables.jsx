@@ -66,6 +66,7 @@ const Tables = () => {
         >
           {resData?.data.data
             .filter((table) => status === "all" || table.status === status)
+            .sort((table1, table2) => table1.tableNo - table2.tableNo)
             .map((table) => {
               return (
                 <TableCard

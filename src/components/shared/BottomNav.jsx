@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { setCutomer } from "../../redux/slices/customerSlice";
+import { enqueueSnackbar } from "notistack";
 
 const BottomNav = () => {
   const navigate = useNavigate();
@@ -35,7 +36,13 @@ const BottomNav = () => {
 
   const handleCreateOrder = () => {
     //send data to the store
+    if(name === '' || phone === '' || guestCount === 0) {
+      enqueueSnackbar("Fields and guest cannot be empty or zero!", {variant: "warning"});
+      return;
+    }
     dispatch(setCutomer({name, phone, guests:guestCount}))
+    setIsModalOpen(false);
+    enqueueSnackbar("Select Available tables", {variant: 'success'});
     navigate('/tables')
   }
 
@@ -71,7 +78,7 @@ const BottomNav = () => {
       </button>
 
       <button
-        disabled = {isActive('/tables') || isActive('/menu')}
+        disabled = {isActive('/menu')}
         onClick={openModal}
         className="absolute bottom-6 bg-[#F6B100] text-[#f5f5f5] rounded-full p-3 items-center"
       >
